@@ -1,13 +1,19 @@
 "use client";
 
 import BarnsCard from "@/components/BarnsCard";
-import { Box, Text, Heading } from "@chakra-ui/react";
+import { Box, Text, Heading, Button, Flex, Spacer } from "@chakra-ui/react";
 
 export default function Barns() {
   return (
     <>
       <Box m={10}>
-        <Heading>Barns:</Heading>
+        <Flex>
+          <Heading>Barns:</Heading>
+          <Spacer/>
+          <Button mr={70} colorScheme="teal" variant="solid">
+            Add barn
+          </Button>
+        </Flex>
         <Box m={15}>
           <BarnsCard />
         </Box>
