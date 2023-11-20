@@ -3,7 +3,12 @@ import NavBar from "@/components/NavBar";
 import { ChakraProvider } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
+import AuthContext, { AuthProvider } from "@/context/AuthProvider";
+import { useContext, useEffect, useState } from "react";
+import axios from "@/api/axios";
+import useAuth from "@/hooks/useAuth";
+import useRefreshToken from "@/hooks/useRefreshToken";
+import SetAccessToken from "@/context/authSetter";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,8 +25,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ChakraProvider>
-          <NavBar />
-          {children}
+          <AuthProvider>
+            <SetAccessToken>
+              <NavBar />
+              {children}
+            </SetAccessToken>
+          </AuthProvider>
         </ChakraProvider>
       </body>
     </html>

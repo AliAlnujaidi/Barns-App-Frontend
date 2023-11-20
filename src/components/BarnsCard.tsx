@@ -1,3 +1,5 @@
+'use clienr';
+import axios from "@/api/axios";
 import {
   Card,
   CardHeader,
@@ -17,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useSWR, { mutate } from "swr";
-const fetcher = (url: any) => fetch(url).then((res) => res.json());
+const fetcher = (url: any) => axios.get(url).then((res) => res.data);
 
 interface IBarn {
   id: number;
@@ -34,19 +36,9 @@ const initialBarns: IBarn[] = [
     phone: "058855955",
   },
 ];
-const loading = () => {
-  return (
-    <>
-      <Stack>
-        <Skeleton height="20px" />
-        <Skeleton height="20px" />
-        <Skeleton height="20px" />
-      </Stack>
-    </>
-  );
-};
+
 export default function BarnsCard() {
-  const { data } = useSWR("http://localhost:5000/barns", fetcher);
+  const { data } = useSWR("/barns", fetcher);
   const [barns, setBarns] = useState(initialBarns);
 
   useEffect(() => {
@@ -58,7 +50,6 @@ export default function BarnsCard() {
   return (
     <>
       <Flex>
-        {!data && loading()}
         {data &&
           barns.map((barn) => {
             return (
